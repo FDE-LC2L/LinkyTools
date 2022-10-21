@@ -2,6 +2,15 @@
 
 namespace LinkyTools.Linky
 {
+    public class InstantConsumptionMesure
+    {
+        public double InstantConsumption { get; set; }
+        public string FormattedTimeMeasure { get; set; } = string.Empty;
+        public DateTime DateTimeMeasure { get; set; }
+
+    }
+
+
     public static class StringExtension
     {
         public static string Right(this string str, int count)
@@ -10,11 +19,19 @@ namespace LinkyTools.Linky
         }
     }
 
-    public class CustomLinkyData
+    public abstract class CustomLinkyData
     {
         #region Fields
         private readonly StringBuilder? _ReceiveBuffer;
         public string RawDatas { get; set; } = string.Empty;
+
+        /// <summary>
+        ///  Date et heure Linky en DateTime
+        /// </summary>
+        public DateTime? MeasureLinkyDateTime { get => GetMeasureLinkyDateTime(); }
+
+        protected abstract DateTime? GetMeasureLinkyDateTime();
+
         #endregion
 
         public CustomLinkyData()

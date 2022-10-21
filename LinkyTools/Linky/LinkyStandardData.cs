@@ -40,7 +40,6 @@ namespace LinkyTools.Linky
             public const string EffectiveVoltage = "URMS";
         }
 
-
         #region Fields   
         private string _CurrentDateAsString = string.Empty;
         private string _FormatedCurrentDateTime = string.Empty;
@@ -64,10 +63,6 @@ namespace LinkyTools.Linky
         ///  Heure Linky formattée au format HH:mm:ss
         /// </summary>
         public string FormatedCurrentTime { get => GetFormatedCurrentTime(); }
-        /// <summary>
-        ///  Date et heure Linky en DateTime
-        /// </summary>
-        public DateTime? MeasureLinkyDateTime { get => GetMeasureLinkyDateTime(); }
         /// <summary>
         /// Energie active soutirée Fournisseur, index 01 (EASF01) 
         /// </summary>
@@ -97,8 +92,6 @@ namespace LinkyTools.Linky
             _RmsVoltagePhase = new int[3];
         }
         #endregion
-
-
 
         private string GetCurrentDateAsString()
         {
@@ -132,9 +125,9 @@ namespace LinkyTools.Linky
             return _FormatedCurrentTime;
         }
 
-        private DateTime? GetMeasureLinkyDateTime()
+        protected override DateTime? GetMeasureLinkyDateTime()
         {
-            if (DateTime.TryParseExact(CurrentDateAsString.Right(12), "yyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))
+            if (CurrentDateAsString.Length == 13 && DateTime.TryParseExact(CurrentDateAsString.Right(12), "yyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))
             {
                 _MeasureLinkyDateTime = dt;
             }
